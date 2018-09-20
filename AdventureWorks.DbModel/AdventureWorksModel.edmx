@@ -1,0 +1,2094 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AdventureWorksModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'hierarchyid' is currently not supported for the target Entity Framework version; the column 'OrganizationNode' in the table 'AdventureWorks.HumanResources.Employee' was excluded.-->
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="NationalIDNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="LoginID" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="OrganizationLevel" Type="smallint" StoreGeneratedPattern="Computed" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BirthDate" Type="date" Nullable="false" />
+          <Property Name="MaritalStatus" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="Gender" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="HireDate" Type="date" Nullable="false" />
+          <Property Name="SalariedFlag" Type="bit" Nullable="false" />
+          <Property Name="VacationHours" Type="smallint" Nullable="false" />
+          <Property Name="SickLeaveHours" Type="smallint" Nullable="false" />
+          <Property Name="CurrentFlag" Type="bit" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeDepartmentHistory">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="DepartmentID" />
+            <PropertyRef Name="ShiftID" />
+            <PropertyRef Name="StartDate" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="DepartmentID" Type="smallint" Nullable="false" />
+          <Property Name="ShiftID" Type="tinyint" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeePayHistory">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="RateChangeDate" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="RateChangeDate" Type="datetime" Nullable="false" />
+          <Property Name="Rate" Type="money" Nullable="false" />
+          <Property Name="PayFrequency" Type="tinyint" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JobCandidate">
+          <Key>
+            <PropertyRef Name="JobCandidateID" />
+          </Key>
+          <Property Name="JobCandidateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BusinessEntityID" Type="int" />
+          <Property Name="Resume" Type="xml" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shift">
+          <Key>
+            <PropertyRef Name="ShiftID" />
+          </Key>
+          <Property Name="ShiftID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="60" />
+          <Property Name="City" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="StateProvinceID" Type="int" Nullable="false" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="SpatialLocation" Type="geography" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AddressType">
+          <Key>
+            <PropertyRef Name="AddressTypeID" />
+          </Key>
+          <Property Name="AddressTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BusinessEntity">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BusinessEntityAddress">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="AddressID" />
+            <PropertyRef Name="AddressTypeID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="AddressID" Type="int" Nullable="false" />
+          <Property Name="AddressTypeID" Type="int" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BusinessEntityContact">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="ContactTypeID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="ContactTypeID" Type="int" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContactType">
+          <Key>
+            <PropertyRef Name="ContactTypeID" />
+          </Key>
+          <Property Name="ContactTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CountryRegion">
+          <Key>
+            <PropertyRef Name="CountryRegionCode" />
+          </Key>
+          <Property Name="CountryRegionCode" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailAddress">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="EmailAddressID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="EmailAddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Password">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordSalt" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="PersonType" Type="nchar" MaxLength="2" Nullable="false" />
+          <Property Name="NameStyle" Type="bit" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="8" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Suffix" Type="nvarchar" MaxLength="10" />
+          <Property Name="EmailPromotion" Type="int" Nullable="false" />
+          <Property Name="AdditionalContactInfo" Type="xml" />
+          <Property Name="Demographics" Type="xml" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PersonPhone">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="PhoneNumber" />
+            <PropertyRef Name="PhoneNumberTypeID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="PhoneNumberTypeID" Type="int" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhoneNumberType">
+          <Key>
+            <PropertyRef Name="PhoneNumberTypeID" />
+          </Key>
+          <Property Name="PhoneNumberTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StateProvince">
+          <Key>
+            <PropertyRef Name="StateProvinceID" />
+          </Key>
+          <Property Name="StateProvinceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateProvinceCode" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="CountryRegionCode" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="IsOnlyStateProvinceFlag" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TerritoryID" Type="int" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AdventureWorks.HumanResources.vEmployee' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vEmployee">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="JobTitle" />
+            <PropertyRef Name="EmailPromotion" />
+            <PropertyRef Name="AddressLine1" />
+            <PropertyRef Name="City" />
+            <PropertyRef Name="StateProvinceName" />
+            <PropertyRef Name="PostalCode" />
+            <PropertyRef Name="CountryRegionName" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="8" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Suffix" Type="nvarchar" MaxLength="10" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="25" />
+          <Property Name="PhoneNumberType" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmailPromotion" Type="int" Nullable="false" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="60" />
+          <Property Name="City" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="StateProvinceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="CountryRegionName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AdditionalContactInfo" Type="xml" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AdventureWorks.HumanResources.vEmployeeDepartment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vEmployeeDepartment">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="JobTitle" />
+            <PropertyRef Name="Department" />
+            <PropertyRef Name="GroupName" />
+            <PropertyRef Name="StartDate" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="8" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Suffix" Type="nvarchar" MaxLength="10" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Department" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AdventureWorks.HumanResources.vEmployeeDepartmentHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vEmployeeDepartmentHistory">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="Shift" />
+            <PropertyRef Name="Department" />
+            <PropertyRef Name="GroupName" />
+            <PropertyRef Name="StartDate" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="8" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Suffix" Type="nvarchar" MaxLength="10" />
+          <Property Name="Shift" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Department" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AdventureWorks.HumanResources.vJobCandidate' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vJobCandidate">
+          <Key>
+            <PropertyRef Name="JobCandidateID" />
+            <PropertyRef Name="ModifiedDate" />
+          </Key>
+          <Property Name="JobCandidateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BusinessEntityID" Type="int" />
+          <Property Name="Name.Prefix" Type="nvarchar" MaxLength="30" />
+          <Property Name="Name.First" Type="nvarchar" MaxLength="30" />
+          <Property Name="Name.Middle" Type="nvarchar" MaxLength="30" />
+          <Property Name="Name.Last" Type="nvarchar" MaxLength="30" />
+          <Property Name="Name.Suffix" Type="nvarchar" MaxLength="30" />
+          <Property Name="Skills" Type="nvarchar(max)" />
+          <Property Name="Addr.Type" Type="nvarchar" MaxLength="30" />
+          <Property Name="Addr.Loc.CountryRegion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Addr.Loc.State" Type="nvarchar" MaxLength="100" />
+          <Property Name="Addr.Loc.City" Type="nvarchar" MaxLength="100" />
+          <Property Name="Addr.PostalCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="EMail" Type="nvarchar(max)" />
+          <Property Name="WebSite" Type="nvarchar(max)" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AdventureWorks.HumanResources.vJobCandidateEducation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vJobCandidateEducation">
+          <Key>
+            <PropertyRef Name="JobCandidateID" />
+          </Key>
+          <Property Name="JobCandidateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Edu.Level" Type="nvarchar(max)" />
+          <Property Name="Edu.StartDate" Type="datetime" />
+          <Property Name="Edu.EndDate" Type="datetime" />
+          <Property Name="Edu.Degree" Type="nvarchar" MaxLength="50" />
+          <Property Name="Edu.Major" Type="nvarchar" MaxLength="50" />
+          <Property Name="Edu.Minor" Type="nvarchar" MaxLength="50" />
+          <Property Name="Edu.GPA" Type="nvarchar" MaxLength="5" />
+          <Property Name="Edu.GPAScale" Type="nvarchar" MaxLength="5" />
+          <Property Name="Edu.School" Type="nvarchar" MaxLength="100" />
+          <Property Name="Edu.Loc.CountryRegion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Edu.Loc.State" Type="nvarchar" MaxLength="100" />
+          <Property Name="Edu.Loc.City" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AdventureWorks.HumanResources.vJobCandidateEmployment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vJobCandidateEmployment">
+          <Key>
+            <PropertyRef Name="JobCandidateID" />
+          </Key>
+          <Property Name="JobCandidateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Emp.StartDate" Type="datetime" />
+          <Property Name="Emp.EndDate" Type="datetime" />
+          <Property Name="Emp.OrgName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Emp.JobTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="Emp.Responsibility" Type="nvarchar(max)" />
+          <Property Name="Emp.FunctionCategory" Type="nvarchar(max)" />
+          <Property Name="Emp.IndustryCategory" Type="nvarchar(max)" />
+          <Property Name="Emp.Loc.CountryRegion" Type="nvarchar(max)" />
+          <Property Name="Emp.Loc.State" Type="nvarchar(max)" />
+          <Property Name="Emp.Loc.City" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AdventureWorks.Person.vAdditionalContactInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vAdditionalContactInfo">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="rowguid" />
+            <PropertyRef Name="ModifiedDate" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TelephoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="TelephoneSpecialInstructions" Type="nvarchar(max)" />
+          <Property Name="Street" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateProvince" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountryRegion" Type="nvarchar" MaxLength="50" />
+          <Property Name="HomeAddressSpecialInstructions" Type="nvarchar(max)" />
+          <Property Name="EMailAddress" Type="nvarchar" MaxLength="128" />
+          <Property Name="EMailSpecialInstructions" Type="nvarchar(max)" />
+          <Property Name="EMailTelephoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AdventureWorks.Person.vStateProvinceCountryRegion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vStateProvinceCountryRegion">
+          <Key>
+            <PropertyRef Name="StateProvinceID" />
+            <PropertyRef Name="StateProvinceCode" />
+            <PropertyRef Name="IsOnlyStateProvinceFlag" />
+            <PropertyRef Name="StateProvinceName" />
+            <PropertyRef Name="TerritoryID" />
+            <PropertyRef Name="CountryRegionCode" />
+            <PropertyRef Name="CountryRegionName" />
+          </Key>
+          <Property Name="StateProvinceID" Type="int" Nullable="false" />
+          <Property Name="StateProvinceCode" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="IsOnlyStateProvinceFlag" Type="bit" Nullable="false" />
+          <Property Name="StateProvinceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TerritoryID" Type="int" Nullable="false" />
+          <Property Name="CountryRegionCode" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="CountryRegionName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Address_StateProvince_StateProvinceID">
+          <End Role="StateProvince" Type="Self.StateProvince" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StateProvince">
+              <PropertyRef Name="StateProvinceID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="StateProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityAddress_Address_AddressID">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="BusinessEntityAddress" Type="Self.BusinessEntityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="BusinessEntityAddress">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityAddress_AddressType_AddressTypeID">
+          <End Role="AddressType" Type="Self.AddressType" Multiplicity="1" />
+          <End Role="BusinessEntityAddress" Type="Self.BusinessEntityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressType">
+              <PropertyRef Name="AddressTypeID" />
+            </Principal>
+            <Dependent Role="BusinessEntityAddress">
+              <PropertyRef Name="AddressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID">
+          <End Role="BusinessEntity" Type="Self.BusinessEntity" Multiplicity="1" />
+          <End Role="BusinessEntityAddress" Type="Self.BusinessEntityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessEntity">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="BusinessEntityAddress">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityContact_BusinessEntity_BusinessEntityID">
+          <End Role="BusinessEntity" Type="Self.BusinessEntity" Multiplicity="1" />
+          <End Role="BusinessEntityContact" Type="Self.BusinessEntityContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessEntity">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="BusinessEntityContact">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityContact_ContactType_ContactTypeID">
+          <End Role="ContactType" Type="Self.ContactType" Multiplicity="1" />
+          <End Role="BusinessEntityContact" Type="Self.BusinessEntityContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContactType">
+              <PropertyRef Name="ContactTypeID" />
+            </Principal>
+            <Dependent Role="BusinessEntityContact">
+              <PropertyRef Name="ContactTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityContact_Person_PersonID">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="BusinessEntityContact" Type="Self.BusinessEntityContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="BusinessEntityContact">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailAddress_Person_BusinessEntityID">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="EmailAddress" Type="Self.EmailAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="EmailAddress">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Person_BusinessEntityID">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDepartmentHistory_Department_DepartmentID">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="EmployeeDepartmentHistory" Type="Self.EmployeeDepartmentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="EmployeeDepartmentHistory">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDepartmentHistory_Employee_BusinessEntityID">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeDepartmentHistory" Type="Self.EmployeeDepartmentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="EmployeeDepartmentHistory">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDepartmentHistory_Shift_ShiftID">
+          <End Role="Shift" Type="Self.Shift" Multiplicity="1" />
+          <End Role="EmployeeDepartmentHistory" Type="Self.EmployeeDepartmentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shift">
+              <PropertyRef Name="ShiftID" />
+            </Principal>
+            <Dependent Role="EmployeeDepartmentHistory">
+              <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeePayHistory_Employee_BusinessEntityID">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeePayHistory" Type="Self.EmployeePayHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="EmployeePayHistory">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobCandidate_Employee_BusinessEntityID">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="JobCandidate" Type="Self.JobCandidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="JobCandidate">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Password_Person_BusinessEntityID">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Password" Type="Self.Password" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="Password">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_BusinessEntity_BusinessEntityID">
+          <End Role="BusinessEntity" Type="Self.BusinessEntity" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessEntity">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonPhone_Person_BusinessEntityID">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="PersonPhone" Type="Self.PersonPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="PersonPhone">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID">
+          <End Role="PhoneNumberType" Type="Self.PhoneNumberType" Multiplicity="1" />
+          <End Role="PersonPhone" Type="Self.PersonPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhoneNumberType">
+              <PropertyRef Name="PhoneNumberTypeID" />
+            </Principal>
+            <Dependent Role="PersonPhone">
+              <PropertyRef Name="PhoneNumberTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StateProvince_CountryRegion_CountryRegionCode">
+          <End Role="CountryRegion" Type="Self.CountryRegion" Multiplicity="1" />
+          <End Role="StateProvince" Type="Self.StateProvince" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CountryRegion">
+              <PropertyRef Name="CountryRegionCode" />
+            </Principal>
+            <Dependent Role="StateProvince">
+              <PropertyRef Name="CountryRegionCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="uspUpdateEmployeeHireInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HumanResources">
+          <Parameter Name="BusinessEntityID" Type="int" Mode="In" />
+          <Parameter Name="JobTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="HireDate" Type="datetime" Mode="In" />
+          <Parameter Name="RateChangeDate" Type="datetime" Mode="In" />
+          <Parameter Name="Rate" Type="money" Mode="In" />
+          <Parameter Name="PayFrequency" Type="tinyint" Mode="In" />
+          <Parameter Name="CurrentFlag" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="uspUpdateEmployeeLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HumanResources">
+          <Parameter Name="BusinessEntityID" Type="int" Mode="In" />
+          <Parameter Name="LoginID" Type="nvarchar" Mode="In" />
+          <Parameter Name="JobTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="HireDate" Type="datetime" Mode="In" />
+          <Parameter Name="CurrentFlag" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="uspUpdateEmployeePersonalInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HumanResources">
+          <Parameter Name="BusinessEntityID" Type="int" Mode="In" />
+          <Parameter Name="NationalIDNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="BirthDate" Type="datetime" Mode="In" />
+          <Parameter Name="MaritalStatus" Type="nchar" Mode="In" />
+          <Parameter Name="Gender" Type="nchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="AdventureWorksModelStoreContainer">
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="HumanResources" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="HumanResources" store:Type="Tables" />
+          <EntitySet Name="EmployeeDepartmentHistory" EntityType="Self.EmployeeDepartmentHistory" Schema="HumanResources" store:Type="Tables" />
+          <EntitySet Name="EmployeePayHistory" EntityType="Self.EmployeePayHistory" Schema="HumanResources" store:Type="Tables" />
+          <EntitySet Name="JobCandidate" EntityType="Self.JobCandidate" Schema="HumanResources" store:Type="Tables" />
+          <EntitySet Name="Shift" EntityType="Self.Shift" Schema="HumanResources" store:Type="Tables" />
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="BusinessEntity" EntityType="Self.BusinessEntity" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="BusinessEntityAddress" EntityType="Self.BusinessEntityAddress" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="BusinessEntityContact" EntityType="Self.BusinessEntityContact" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="ContactType" EntityType="Self.ContactType" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="CountryRegion" EntityType="Self.CountryRegion" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="EmailAddress" EntityType="Self.EmailAddress" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="Password" EntityType="Self.Password" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="PersonPhone" EntityType="Self.PersonPhone" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="PhoneNumberType" EntityType="Self.PhoneNumberType" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="StateProvince" EntityType="Self.StateProvince" Schema="Person" store:Type="Tables" />
+          <EntitySet Name="vEmployee" EntityType="Self.vEmployee" store:Type="Views" store:Schema="HumanResources">
+            <DefiningQuery>SELECT 
+    [vEmployee].[BusinessEntityID] AS [BusinessEntityID], 
+    [vEmployee].[Title] AS [Title], 
+    [vEmployee].[FirstName] AS [FirstName], 
+    [vEmployee].[MiddleName] AS [MiddleName], 
+    [vEmployee].[LastName] AS [LastName], 
+    [vEmployee].[Suffix] AS [Suffix], 
+    [vEmployee].[JobTitle] AS [JobTitle], 
+    [vEmployee].[PhoneNumber] AS [PhoneNumber], 
+    [vEmployee].[PhoneNumberType] AS [PhoneNumberType], 
+    [vEmployee].[EmailAddress] AS [EmailAddress], 
+    [vEmployee].[EmailPromotion] AS [EmailPromotion], 
+    [vEmployee].[AddressLine1] AS [AddressLine1], 
+    [vEmployee].[AddressLine2] AS [AddressLine2], 
+    [vEmployee].[City] AS [City], 
+    [vEmployee].[StateProvinceName] AS [StateProvinceName], 
+    [vEmployee].[PostalCode] AS [PostalCode], 
+    [vEmployee].[CountryRegionName] AS [CountryRegionName], 
+    [vEmployee].[AdditionalContactInfo] AS [AdditionalContactInfo]
+    FROM [HumanResources].[vEmployee] AS [vEmployee]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vEmployeeDepartment" EntityType="Self.vEmployeeDepartment" store:Type="Views" store:Schema="HumanResources">
+            <DefiningQuery>SELECT 
+    [vEmployeeDepartment].[BusinessEntityID] AS [BusinessEntityID], 
+    [vEmployeeDepartment].[Title] AS [Title], 
+    [vEmployeeDepartment].[FirstName] AS [FirstName], 
+    [vEmployeeDepartment].[MiddleName] AS [MiddleName], 
+    [vEmployeeDepartment].[LastName] AS [LastName], 
+    [vEmployeeDepartment].[Suffix] AS [Suffix], 
+    [vEmployeeDepartment].[JobTitle] AS [JobTitle], 
+    [vEmployeeDepartment].[Department] AS [Department], 
+    [vEmployeeDepartment].[GroupName] AS [GroupName], 
+    [vEmployeeDepartment].[StartDate] AS [StartDate]
+    FROM [HumanResources].[vEmployeeDepartment] AS [vEmployeeDepartment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vEmployeeDepartmentHistory" EntityType="Self.vEmployeeDepartmentHistory" store:Type="Views" store:Schema="HumanResources">
+            <DefiningQuery>SELECT 
+    [vEmployeeDepartmentHistory].[BusinessEntityID] AS [BusinessEntityID], 
+    [vEmployeeDepartmentHistory].[Title] AS [Title], 
+    [vEmployeeDepartmentHistory].[FirstName] AS [FirstName], 
+    [vEmployeeDepartmentHistory].[MiddleName] AS [MiddleName], 
+    [vEmployeeDepartmentHistory].[LastName] AS [LastName], 
+    [vEmployeeDepartmentHistory].[Suffix] AS [Suffix], 
+    [vEmployeeDepartmentHistory].[Shift] AS [Shift], 
+    [vEmployeeDepartmentHistory].[Department] AS [Department], 
+    [vEmployeeDepartmentHistory].[GroupName] AS [GroupName], 
+    [vEmployeeDepartmentHistory].[StartDate] AS [StartDate], 
+    [vEmployeeDepartmentHistory].[EndDate] AS [EndDate]
+    FROM [HumanResources].[vEmployeeDepartmentHistory] AS [vEmployeeDepartmentHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vJobCandidate" EntityType="Self.vJobCandidate" store:Type="Views" store:Schema="HumanResources">
+            <DefiningQuery>SELECT 
+    [vJobCandidate].[JobCandidateID] AS [JobCandidateID], 
+    [vJobCandidate].[BusinessEntityID] AS [BusinessEntityID], 
+    [vJobCandidate].[Name.Prefix] AS [Name.Prefix], 
+    [vJobCandidate].[Name.First] AS [Name.First], 
+    [vJobCandidate].[Name.Middle] AS [Name.Middle], 
+    [vJobCandidate].[Name.Last] AS [Name.Last], 
+    [vJobCandidate].[Name.Suffix] AS [Name.Suffix], 
+    [vJobCandidate].[Skills] AS [Skills], 
+    [vJobCandidate].[Addr.Type] AS [Addr.Type], 
+    [vJobCandidate].[Addr.Loc.CountryRegion] AS [Addr.Loc.CountryRegion], 
+    [vJobCandidate].[Addr.Loc.State] AS [Addr.Loc.State], 
+    [vJobCandidate].[Addr.Loc.City] AS [Addr.Loc.City], 
+    [vJobCandidate].[Addr.PostalCode] AS [Addr.PostalCode], 
+    [vJobCandidate].[EMail] AS [EMail], 
+    [vJobCandidate].[WebSite] AS [WebSite], 
+    [vJobCandidate].[ModifiedDate] AS [ModifiedDate]
+    FROM [HumanResources].[vJobCandidate] AS [vJobCandidate]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vJobCandidateEducation" EntityType="Self.vJobCandidateEducation" store:Type="Views" store:Schema="HumanResources">
+            <DefiningQuery>SELECT 
+    [vJobCandidateEducation].[JobCandidateID] AS [JobCandidateID], 
+    [vJobCandidateEducation].[Edu.Level] AS [Edu.Level], 
+    [vJobCandidateEducation].[Edu.StartDate] AS [Edu.StartDate], 
+    [vJobCandidateEducation].[Edu.EndDate] AS [Edu.EndDate], 
+    [vJobCandidateEducation].[Edu.Degree] AS [Edu.Degree], 
+    [vJobCandidateEducation].[Edu.Major] AS [Edu.Major], 
+    [vJobCandidateEducation].[Edu.Minor] AS [Edu.Minor], 
+    [vJobCandidateEducation].[Edu.GPA] AS [Edu.GPA], 
+    [vJobCandidateEducation].[Edu.GPAScale] AS [Edu.GPAScale], 
+    [vJobCandidateEducation].[Edu.School] AS [Edu.School], 
+    [vJobCandidateEducation].[Edu.Loc.CountryRegion] AS [Edu.Loc.CountryRegion], 
+    [vJobCandidateEducation].[Edu.Loc.State] AS [Edu.Loc.State], 
+    [vJobCandidateEducation].[Edu.Loc.City] AS [Edu.Loc.City]
+    FROM [HumanResources].[vJobCandidateEducation] AS [vJobCandidateEducation]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vJobCandidateEmployment" EntityType="Self.vJobCandidateEmployment" store:Type="Views" store:Schema="HumanResources">
+            <DefiningQuery>SELECT 
+    [vJobCandidateEmployment].[JobCandidateID] AS [JobCandidateID], 
+    [vJobCandidateEmployment].[Emp.StartDate] AS [Emp.StartDate], 
+    [vJobCandidateEmployment].[Emp.EndDate] AS [Emp.EndDate], 
+    [vJobCandidateEmployment].[Emp.OrgName] AS [Emp.OrgName], 
+    [vJobCandidateEmployment].[Emp.JobTitle] AS [Emp.JobTitle], 
+    [vJobCandidateEmployment].[Emp.Responsibility] AS [Emp.Responsibility], 
+    [vJobCandidateEmployment].[Emp.FunctionCategory] AS [Emp.FunctionCategory], 
+    [vJobCandidateEmployment].[Emp.IndustryCategory] AS [Emp.IndustryCategory], 
+    [vJobCandidateEmployment].[Emp.Loc.CountryRegion] AS [Emp.Loc.CountryRegion], 
+    [vJobCandidateEmployment].[Emp.Loc.State] AS [Emp.Loc.State], 
+    [vJobCandidateEmployment].[Emp.Loc.City] AS [Emp.Loc.City]
+    FROM [HumanResources].[vJobCandidateEmployment] AS [vJobCandidateEmployment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vAdditionalContactInfo" EntityType="Self.vAdditionalContactInfo" store:Type="Views" store:Schema="Person">
+            <DefiningQuery>SELECT 
+    [vAdditionalContactInfo].[BusinessEntityID] AS [BusinessEntityID], 
+    [vAdditionalContactInfo].[FirstName] AS [FirstName], 
+    [vAdditionalContactInfo].[MiddleName] AS [MiddleName], 
+    [vAdditionalContactInfo].[LastName] AS [LastName], 
+    [vAdditionalContactInfo].[TelephoneNumber] AS [TelephoneNumber], 
+    [vAdditionalContactInfo].[TelephoneSpecialInstructions] AS [TelephoneSpecialInstructions], 
+    [vAdditionalContactInfo].[Street] AS [Street], 
+    [vAdditionalContactInfo].[City] AS [City], 
+    [vAdditionalContactInfo].[StateProvince] AS [StateProvince], 
+    [vAdditionalContactInfo].[PostalCode] AS [PostalCode], 
+    [vAdditionalContactInfo].[CountryRegion] AS [CountryRegion], 
+    [vAdditionalContactInfo].[HomeAddressSpecialInstructions] AS [HomeAddressSpecialInstructions], 
+    [vAdditionalContactInfo].[EMailAddress] AS [EMailAddress], 
+    [vAdditionalContactInfo].[EMailSpecialInstructions] AS [EMailSpecialInstructions], 
+    [vAdditionalContactInfo].[EMailTelephoneNumber] AS [EMailTelephoneNumber], 
+    [vAdditionalContactInfo].[rowguid] AS [rowguid], 
+    [vAdditionalContactInfo].[ModifiedDate] AS [ModifiedDate]
+    FROM [Person].[vAdditionalContactInfo] AS [vAdditionalContactInfo]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vStateProvinceCountryRegion" EntityType="Self.vStateProvinceCountryRegion" store:Type="Views" store:Schema="Person">
+            <DefiningQuery>SELECT 
+    [vStateProvinceCountryRegion].[StateProvinceID] AS [StateProvinceID], 
+    [vStateProvinceCountryRegion].[StateProvinceCode] AS [StateProvinceCode], 
+    [vStateProvinceCountryRegion].[IsOnlyStateProvinceFlag] AS [IsOnlyStateProvinceFlag], 
+    [vStateProvinceCountryRegion].[StateProvinceName] AS [StateProvinceName], 
+    [vStateProvinceCountryRegion].[TerritoryID] AS [TerritoryID], 
+    [vStateProvinceCountryRegion].[CountryRegionCode] AS [CountryRegionCode], 
+    [vStateProvinceCountryRegion].[CountryRegionName] AS [CountryRegionName]
+    FROM [Person].[vStateProvinceCountryRegion] AS [vStateProvinceCountryRegion]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Address_StateProvince_StateProvinceID" Association="Self.FK_Address_StateProvince_StateProvinceID">
+            <End Role="StateProvince" EntitySet="StateProvince" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityAddress_Address_AddressID" Association="Self.FK_BusinessEntityAddress_Address_AddressID">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="BusinessEntityAddress" EntitySet="BusinessEntityAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityAddress_AddressType_AddressTypeID" Association="Self.FK_BusinessEntityAddress_AddressType_AddressTypeID">
+            <End Role="AddressType" EntitySet="AddressType" />
+            <End Role="BusinessEntityAddress" EntitySet="BusinessEntityAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID" Association="Self.FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID">
+            <End Role="BusinessEntity" EntitySet="BusinessEntity" />
+            <End Role="BusinessEntityAddress" EntitySet="BusinessEntityAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityContact_BusinessEntity_BusinessEntityID" Association="Self.FK_BusinessEntityContact_BusinessEntity_BusinessEntityID">
+            <End Role="BusinessEntity" EntitySet="BusinessEntity" />
+            <End Role="BusinessEntityContact" EntitySet="BusinessEntityContact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityContact_ContactType_ContactTypeID" Association="Self.FK_BusinessEntityContact_ContactType_ContactTypeID">
+            <End Role="ContactType" EntitySet="ContactType" />
+            <End Role="BusinessEntityContact" EntitySet="BusinessEntityContact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityContact_Person_PersonID" Association="Self.FK_BusinessEntityContact_Person_PersonID">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="BusinessEntityContact" EntitySet="BusinessEntityContact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailAddress_Person_BusinessEntityID" Association="Self.FK_EmailAddress_Person_BusinessEntityID">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="EmailAddress" EntitySet="EmailAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Person_BusinessEntityID" Association="Self.FK_Employee_Person_BusinessEntityID">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDepartmentHistory_Department_DepartmentID" Association="Self.FK_EmployeeDepartmentHistory_Department_DepartmentID">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="EmployeeDepartmentHistory" EntitySet="EmployeeDepartmentHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDepartmentHistory_Employee_BusinessEntityID" Association="Self.FK_EmployeeDepartmentHistory_Employee_BusinessEntityID">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeDepartmentHistory" EntitySet="EmployeeDepartmentHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDepartmentHistory_Shift_ShiftID" Association="Self.FK_EmployeeDepartmentHistory_Shift_ShiftID">
+            <End Role="Shift" EntitySet="Shift" />
+            <End Role="EmployeeDepartmentHistory" EntitySet="EmployeeDepartmentHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeePayHistory_Employee_BusinessEntityID" Association="Self.FK_EmployeePayHistory_Employee_BusinessEntityID">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeePayHistory" EntitySet="EmployeePayHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobCandidate_Employee_BusinessEntityID" Association="Self.FK_JobCandidate_Employee_BusinessEntityID">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="JobCandidate" EntitySet="JobCandidate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Password_Person_BusinessEntityID" Association="Self.FK_Password_Person_BusinessEntityID">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Password" EntitySet="Password" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_BusinessEntity_BusinessEntityID" Association="Self.FK_Person_BusinessEntity_BusinessEntityID">
+            <End Role="BusinessEntity" EntitySet="BusinessEntity" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonPhone_Person_BusinessEntityID" Association="Self.FK_PersonPhone_Person_BusinessEntityID">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="PersonPhone" EntitySet="PersonPhone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID" Association="Self.FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID">
+            <End Role="PhoneNumberType" EntitySet="PhoneNumberType" />
+            <End Role="PersonPhone" EntitySet="PersonPhone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StateProvince_CountryRegion_CountryRegionCode" Association="Self.FK_StateProvince_CountryRegion_CountryRegionCode">
+            <End Role="CountryRegion" EntitySet="CountryRegion" />
+            <End Role="StateProvince" EntitySet="StateProvince" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AdventureWorksModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="EmployeeDepartmentHistories" Relationship="Self.FK_EmployeeDepartmentHistory_Department_DepartmentID" FromRole="Department" ToRole="EmployeeDepartmentHistory" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="NationalIDNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoginID" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrganizationLevel" Type="Int16" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MaritalStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="HireDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SalariedFlag" Type="Boolean" Nullable="false" />
+          <Property Name="VacationHours" Type="Int16" Nullable="false" />
+          <Property Name="SickLeaveHours" Type="Int16" Nullable="false" />
+          <Property Name="CurrentFlag" Type="Boolean" Nullable="false" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Employee_Person_BusinessEntityID" FromRole="Employee" ToRole="Person" />
+          <NavigationProperty Name="EmployeeDepartmentHistories" Relationship="Self.FK_EmployeeDepartmentHistory_Employee_BusinessEntityID" FromRole="Employee" ToRole="EmployeeDepartmentHistory" />
+          <NavigationProperty Name="EmployeePayHistories" Relationship="Self.FK_EmployeePayHistory_Employee_BusinessEntityID" FromRole="Employee" ToRole="EmployeePayHistory" />
+          <NavigationProperty Name="JobCandidates" Relationship="Self.FK_JobCandidate_Employee_BusinessEntityID" FromRole="Employee" ToRole="JobCandidate" />
+        </EntityType>
+        <EntityType Name="EmployeeDepartmentHistory">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="DepartmentID" />
+            <PropertyRef Name="ShiftID" />
+            <PropertyRef Name="StartDate" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentID" Type="Int16" Nullable="false" />
+          <Property Name="ShiftID" Type="Byte" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_EmployeeDepartmentHistory_Department_DepartmentID" FromRole="EmployeeDepartmentHistory" ToRole="Department" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeDepartmentHistory_Employee_BusinessEntityID" FromRole="EmployeeDepartmentHistory" ToRole="Employee" />
+          <NavigationProperty Name="Shift" Relationship="Self.FK_EmployeeDepartmentHistory_Shift_ShiftID" FromRole="EmployeeDepartmentHistory" ToRole="Shift" />
+        </EntityType>
+        <EntityType Name="EmployeePayHistory">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="RateChangeDate" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="RateChangeDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Rate" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PayFrequency" Type="Byte" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeePayHistory_Employee_BusinessEntityID" FromRole="EmployeePayHistory" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="JobCandidate">
+          <Key>
+            <PropertyRef Name="JobCandidateID" />
+          </Key>
+          <Property Name="JobCandidateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BusinessEntityID" Type="Int32" />
+          <Property Name="Resume" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_JobCandidate_Employee_BusinessEntityID" FromRole="JobCandidate" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Shift">
+          <Key>
+            <PropertyRef Name="ShiftID" />
+          </Key>
+          <Property Name="ShiftID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="EmployeeDepartmentHistories" Relationship="Self.FK_EmployeeDepartmentHistory_Shift_ShiftID" FromRole="Shift" ToRole="EmployeeDepartmentHistory" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressID" />
+          </Key>
+          <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressLine1" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AddressLine2" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StateProvinceID" Type="Int32" Nullable="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SpatialLocation" Type="Geography" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="StateProvince" Relationship="Self.FK_Address_StateProvince_StateProvinceID" FromRole="Address" ToRole="StateProvince" />
+          <NavigationProperty Name="BusinessEntityAddresses" Relationship="Self.FK_BusinessEntityAddress_Address_AddressID" FromRole="Address" ToRole="BusinessEntityAddress" />
+        </EntityType>
+        <EntityType Name="AddressType">
+          <Key>
+            <PropertyRef Name="AddressTypeID" />
+          </Key>
+          <Property Name="AddressTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BusinessEntityAddresses" Relationship="Self.FK_BusinessEntityAddress_AddressType_AddressTypeID" FromRole="AddressType" ToRole="BusinessEntityAddress" />
+        </EntityType>
+        <EntityType Name="BusinessEntity">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BusinessEntityAddresses" Relationship="Self.FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID" FromRole="BusinessEntity" ToRole="BusinessEntityAddress" />
+          <NavigationProperty Name="BusinessEntityContacts" Relationship="Self.FK_BusinessEntityContact_BusinessEntity_BusinessEntityID" FromRole="BusinessEntity" ToRole="BusinessEntityContact" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Person_BusinessEntity_BusinessEntityID" FromRole="BusinessEntity" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="BusinessEntityAddress">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="AddressID" />
+            <PropertyRef Name="AddressTypeID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="AddressID" Type="Int32" Nullable="false" />
+          <Property Name="AddressTypeID" Type="Int32" Nullable="false" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_BusinessEntityAddress_Address_AddressID" FromRole="BusinessEntityAddress" ToRole="Address" />
+          <NavigationProperty Name="AddressType" Relationship="Self.FK_BusinessEntityAddress_AddressType_AddressTypeID" FromRole="BusinessEntityAddress" ToRole="AddressType" />
+          <NavigationProperty Name="BusinessEntity" Relationship="Self.FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID" FromRole="BusinessEntityAddress" ToRole="BusinessEntity" />
+        </EntityType>
+        <EntityType Name="BusinessEntityContact">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="PersonID" />
+            <PropertyRef Name="ContactTypeID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="ContactTypeID" Type="Int32" Nullable="false" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BusinessEntity" Relationship="Self.FK_BusinessEntityContact_BusinessEntity_BusinessEntityID" FromRole="BusinessEntityContact" ToRole="BusinessEntity" />
+          <NavigationProperty Name="ContactType" Relationship="Self.FK_BusinessEntityContact_ContactType_ContactTypeID" FromRole="BusinessEntityContact" ToRole="ContactType" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_BusinessEntityContact_Person_PersonID" FromRole="BusinessEntityContact" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="ContactType">
+          <Key>
+            <PropertyRef Name="ContactTypeID" />
+          </Key>
+          <Property Name="ContactTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BusinessEntityContacts" Relationship="Self.FK_BusinessEntityContact_ContactType_ContactTypeID" FromRole="ContactType" ToRole="BusinessEntityContact" />
+        </EntityType>
+        <EntityType Name="CountryRegion">
+          <Key>
+            <PropertyRef Name="CountryRegionCode" />
+          </Key>
+          <Property Name="CountryRegionCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="StateProvinces" Relationship="Self.FK_StateProvince_CountryRegion_CountryRegionCode" FromRole="CountryRegion" ToRole="StateProvince" />
+        </EntityType>
+        <EntityType Name="EmailAddress">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="EmailAddressID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="EmailAddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailAddress1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_EmailAddress_Person_BusinessEntityID" FromRole="EmailAddress" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Password">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Password_Person_BusinessEntityID" FromRole="Password" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="PersonType" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="NameStyle" Type="Boolean" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Suffix" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="EmailPromotion" Type="Int32" Nullable="false" />
+          <Property Name="AdditionalContactInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Demographics" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Person_BusinessEntityID" FromRole="Person" ToRole="Employee" />
+          <NavigationProperty Name="BusinessEntity" Relationship="Self.FK_Person_BusinessEntity_BusinessEntityID" FromRole="Person" ToRole="BusinessEntity" />
+          <NavigationProperty Name="BusinessEntityContacts" Relationship="Self.FK_BusinessEntityContact_Person_PersonID" FromRole="Person" ToRole="BusinessEntityContact" />
+          <NavigationProperty Name="EmailAddresses" Relationship="Self.FK_EmailAddress_Person_BusinessEntityID" FromRole="Person" ToRole="EmailAddress" />
+          <NavigationProperty Name="Password" Relationship="Self.FK_Password_Person_BusinessEntityID" FromRole="Person" ToRole="Password" />
+          <NavigationProperty Name="PersonPhones" Relationship="Self.FK_PersonPhone_Person_BusinessEntityID" FromRole="Person" ToRole="PersonPhone" />
+        </EntityType>
+        <EntityType Name="PersonPhone">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="PhoneNumber" />
+            <PropertyRef Name="PhoneNumberTypeID" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumberTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_PersonPhone_Person_BusinessEntityID" FromRole="PersonPhone" ToRole="Person" />
+          <NavigationProperty Name="PhoneNumberType" Relationship="Self.FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID" FromRole="PersonPhone" ToRole="PhoneNumberType" />
+        </EntityType>
+        <EntityType Name="PhoneNumberType">
+          <Key>
+            <PropertyRef Name="PhoneNumberTypeID" />
+          </Key>
+          <Property Name="PhoneNumberTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PersonPhones" Relationship="Self.FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID" FromRole="PhoneNumberType" ToRole="PersonPhone" />
+        </EntityType>
+        <EntityType Name="StateProvince">
+          <Key>
+            <PropertyRef Name="StateProvinceID" />
+          </Key>
+          <Property Name="StateProvinceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateProvinceCode" Type="String" MaxLength="3" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CountryRegionCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsOnlyStateProvinceFlag" Type="Boolean" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TerritoryID" Type="Int32" Nullable="false" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Addresses" Relationship="Self.FK_Address_StateProvince_StateProvinceID" FromRole="StateProvince" ToRole="Address" />
+          <NavigationProperty Name="CountryRegion" Relationship="Self.FK_StateProvince_CountryRegion_CountryRegionCode" FromRole="StateProvince" ToRole="CountryRegion" />
+        </EntityType>
+        <EntityType Name="vEmployee">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="JobTitle" />
+            <PropertyRef Name="EmailPromotion" />
+            <PropertyRef Name="AddressLine1" />
+            <PropertyRef Name="City" />
+            <PropertyRef Name="StateProvinceName" />
+            <PropertyRef Name="PostalCode" />
+            <PropertyRef Name="CountryRegionName" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Suffix" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailPromotion" Type="Int32" Nullable="false" />
+          <Property Name="AddressLine1" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AddressLine2" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StateProvinceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CountryRegionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AdditionalContactInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vEmployeeDepartment">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="JobTitle" />
+            <PropertyRef Name="Department" />
+            <PropertyRef Name="GroupName" />
+            <PropertyRef Name="StartDate" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Suffix" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="vEmployeeDepartmentHistory">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="Shift" />
+            <PropertyRef Name="Department" />
+            <PropertyRef Name="GroupName" />
+            <PropertyRef Name="StartDate" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Suffix" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Shift" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="vJobCandidate">
+          <Key>
+            <PropertyRef Name="JobCandidateID" />
+            <PropertyRef Name="ModifiedDate" />
+          </Key>
+          <Property Name="JobCandidateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BusinessEntityID" Type="Int32" />
+          <Property Name="Name_Prefix" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name_First" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name_Middle" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name_Last" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name_Suffix" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Skills" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Addr_Type" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Addr_Loc_CountryRegion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Addr_Loc_State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Addr_Loc_City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Addr_PostalCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WebSite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="vJobCandidateEducation">
+          <Key>
+            <PropertyRef Name="JobCandidateID" />
+          </Key>
+          <Property Name="JobCandidateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Edu_Level" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Edu_StartDate" Type="DateTime" Precision="3" />
+          <Property Name="Edu_EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Edu_Degree" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Edu_Major" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Edu_Minor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Edu_GPA" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Edu_GPAScale" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Edu_School" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Edu_Loc_CountryRegion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Edu_Loc_State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Edu_Loc_City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vJobCandidateEmployment">
+          <Key>
+            <PropertyRef Name="JobCandidateID" />
+          </Key>
+          <Property Name="JobCandidateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Emp_StartDate" Type="DateTime" Precision="3" />
+          <Property Name="Emp_EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Emp_OrgName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_JobTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Responsibility" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_FunctionCategory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_IndustryCategory" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Loc_CountryRegion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Loc_State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Emp_Loc_City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vAdditionalContactInfo">
+          <Key>
+            <PropertyRef Name="BusinessEntityID" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+            <PropertyRef Name="rowguid" />
+            <PropertyRef Name="ModifiedDate" />
+          </Key>
+          <Property Name="BusinessEntityID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TelephoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneSpecialInstructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateProvince" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CountryRegion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HomeAddressSpecialInstructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EMailAddress" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EMailSpecialInstructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EMailTelephoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="vStateProvinceCountryRegion">
+          <Key>
+            <PropertyRef Name="StateProvinceID" />
+            <PropertyRef Name="StateProvinceCode" />
+            <PropertyRef Name="IsOnlyStateProvinceFlag" />
+            <PropertyRef Name="StateProvinceName" />
+            <PropertyRef Name="TerritoryID" />
+            <PropertyRef Name="CountryRegionCode" />
+            <PropertyRef Name="CountryRegionName" />
+          </Key>
+          <Property Name="StateProvinceID" Type="Int32" Nullable="false" />
+          <Property Name="StateProvinceCode" Type="String" MaxLength="3" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="IsOnlyStateProvinceFlag" Type="Boolean" Nullable="false" />
+          <Property Name="StateProvinceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TerritoryID" Type="Int32" Nullable="false" />
+          <Property Name="CountryRegionCode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CountryRegionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EmployeeDepartmentHistory_Department_DepartmentID">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="EmployeeDepartmentHistory" Type="Self.EmployeeDepartmentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="EmployeeDepartmentHistory">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Person_BusinessEntityID">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDepartmentHistory_Employee_BusinessEntityID">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeDepartmentHistory" Type="Self.EmployeeDepartmentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="EmployeeDepartmentHistory">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeePayHistory_Employee_BusinessEntityID">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeePayHistory" Type="Self.EmployeePayHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="EmployeePayHistory">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobCandidate_Employee_BusinessEntityID">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="JobCandidate" Type="Self.JobCandidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="JobCandidate">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDepartmentHistory_Shift_ShiftID">
+          <End Role="Shift" Type="Self.Shift" Multiplicity="1" />
+          <End Role="EmployeeDepartmentHistory" Type="Self.EmployeeDepartmentHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shift">
+              <PropertyRef Name="ShiftID" />
+            </Principal>
+            <Dependent Role="EmployeeDepartmentHistory">
+              <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Address_StateProvince_StateProvinceID">
+          <End Role="StateProvince" Type="Self.StateProvince" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StateProvince">
+              <PropertyRef Name="StateProvinceID" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="StateProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityAddress_Address_AddressID">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="BusinessEntityAddress" Type="Self.BusinessEntityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressID" />
+            </Principal>
+            <Dependent Role="BusinessEntityAddress">
+              <PropertyRef Name="AddressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityAddress_AddressType_AddressTypeID">
+          <End Role="AddressType" Type="Self.AddressType" Multiplicity="1" />
+          <End Role="BusinessEntityAddress" Type="Self.BusinessEntityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressType">
+              <PropertyRef Name="AddressTypeID" />
+            </Principal>
+            <Dependent Role="BusinessEntityAddress">
+              <PropertyRef Name="AddressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID">
+          <End Role="BusinessEntity" Type="Self.BusinessEntity" Multiplicity="1" />
+          <End Role="BusinessEntityAddress" Type="Self.BusinessEntityAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessEntity">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="BusinessEntityAddress">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityContact_BusinessEntity_BusinessEntityID">
+          <End Role="BusinessEntity" Type="Self.BusinessEntity" Multiplicity="1" />
+          <End Role="BusinessEntityContact" Type="Self.BusinessEntityContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessEntity">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="BusinessEntityContact">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_BusinessEntity_BusinessEntityID">
+          <End Role="BusinessEntity" Type="Self.BusinessEntity" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessEntity">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityContact_ContactType_ContactTypeID">
+          <End Role="ContactType" Type="Self.ContactType" Multiplicity="1" />
+          <End Role="BusinessEntityContact" Type="Self.BusinessEntityContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContactType">
+              <PropertyRef Name="ContactTypeID" />
+            </Principal>
+            <Dependent Role="BusinessEntityContact">
+              <PropertyRef Name="ContactTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessEntityContact_Person_PersonID">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="BusinessEntityContact" Type="Self.BusinessEntityContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="BusinessEntityContact">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StateProvince_CountryRegion_CountryRegionCode">
+          <End Role="CountryRegion" Type="Self.CountryRegion" Multiplicity="1" />
+          <End Role="StateProvince" Type="Self.StateProvince" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CountryRegion">
+              <PropertyRef Name="CountryRegionCode" />
+            </Principal>
+            <Dependent Role="StateProvince">
+              <PropertyRef Name="CountryRegionCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmailAddress_Person_BusinessEntityID">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="EmailAddress" Type="Self.EmailAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="EmailAddress">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Password_Person_BusinessEntityID">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Password" Type="Self.Password" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="Password">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonPhone_Person_BusinessEntityID">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="PersonPhone" Type="Self.PersonPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="BusinessEntityID" />
+            </Principal>
+            <Dependent Role="PersonPhone">
+              <PropertyRef Name="BusinessEntityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID">
+          <End Role="PhoneNumberType" Type="Self.PhoneNumberType" Multiplicity="1" />
+          <End Role="PersonPhone" Type="Self.PersonPhone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhoneNumberType">
+              <PropertyRef Name="PhoneNumberTypeID" />
+            </Principal>
+            <Dependent Role="PersonPhone">
+              <PropertyRef Name="PhoneNumberTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="EmployeeDepartmentHistories" EntityType="Self.EmployeeDepartmentHistory" />
+          <EntitySet Name="EmployeePayHistories" EntityType="Self.EmployeePayHistory" />
+          <EntitySet Name="JobCandidates" EntityType="Self.JobCandidate" />
+          <EntitySet Name="Shifts" EntityType="Self.Shift" />
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="AddressTypes" EntityType="Self.AddressType" />
+          <EntitySet Name="BusinessEntities" EntityType="Self.BusinessEntity" />
+          <EntitySet Name="BusinessEntityAddresses" EntityType="Self.BusinessEntityAddress" />
+          <EntitySet Name="BusinessEntityContacts" EntityType="Self.BusinessEntityContact" />
+          <EntitySet Name="ContactTypes" EntityType="Self.ContactType" />
+          <EntitySet Name="CountryRegions" EntityType="Self.CountryRegion" />
+          <EntitySet Name="EmailAddresses" EntityType="Self.EmailAddress" />
+          <EntitySet Name="Passwords" EntityType="Self.Password" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="PersonPhones" EntityType="Self.PersonPhone" />
+          <EntitySet Name="PhoneNumberTypes" EntityType="Self.PhoneNumberType" />
+          <EntitySet Name="StateProvinces" EntityType="Self.StateProvince" />
+          <EntitySet Name="vEmployees" EntityType="Self.vEmployee" />
+          <EntitySet Name="vEmployeeDepartments" EntityType="Self.vEmployeeDepartment" />
+          <EntitySet Name="vEmployeeDepartmentHistories" EntityType="Self.vEmployeeDepartmentHistory" />
+          <EntitySet Name="vJobCandidates" EntityType="Self.vJobCandidate" />
+          <EntitySet Name="vJobCandidateEducations" EntityType="Self.vJobCandidateEducation" />
+          <EntitySet Name="vJobCandidateEmployments" EntityType="Self.vJobCandidateEmployment" />
+          <EntitySet Name="vAdditionalContactInfoes" EntityType="Self.vAdditionalContactInfo" />
+          <EntitySet Name="vStateProvinceCountryRegions" EntityType="Self.vStateProvinceCountryRegion" />
+          <AssociationSet Name="FK_EmployeeDepartmentHistory_Department_DepartmentID" Association="Self.FK_EmployeeDepartmentHistory_Department_DepartmentID">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="EmployeeDepartmentHistory" EntitySet="EmployeeDepartmentHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Person_BusinessEntityID" Association="Self.FK_Employee_Person_BusinessEntityID">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDepartmentHistory_Employee_BusinessEntityID" Association="Self.FK_EmployeeDepartmentHistory_Employee_BusinessEntityID">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeDepartmentHistory" EntitySet="EmployeeDepartmentHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeePayHistory_Employee_BusinessEntityID" Association="Self.FK_EmployeePayHistory_Employee_BusinessEntityID">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeePayHistory" EntitySet="EmployeePayHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobCandidate_Employee_BusinessEntityID" Association="Self.FK_JobCandidate_Employee_BusinessEntityID">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="JobCandidate" EntitySet="JobCandidates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDepartmentHistory_Shift_ShiftID" Association="Self.FK_EmployeeDepartmentHistory_Shift_ShiftID">
+            <End Role="Shift" EntitySet="Shifts" />
+            <End Role="EmployeeDepartmentHistory" EntitySet="EmployeeDepartmentHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Address_StateProvince_StateProvinceID" Association="Self.FK_Address_StateProvince_StateProvinceID">
+            <End Role="StateProvince" EntitySet="StateProvinces" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityAddress_Address_AddressID" Association="Self.FK_BusinessEntityAddress_Address_AddressID">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="BusinessEntityAddress" EntitySet="BusinessEntityAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityAddress_AddressType_AddressTypeID" Association="Self.FK_BusinessEntityAddress_AddressType_AddressTypeID">
+            <End Role="AddressType" EntitySet="AddressTypes" />
+            <End Role="BusinessEntityAddress" EntitySet="BusinessEntityAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID" Association="Self.FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID">
+            <End Role="BusinessEntity" EntitySet="BusinessEntities" />
+            <End Role="BusinessEntityAddress" EntitySet="BusinessEntityAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityContact_BusinessEntity_BusinessEntityID" Association="Self.FK_BusinessEntityContact_BusinessEntity_BusinessEntityID">
+            <End Role="BusinessEntity" EntitySet="BusinessEntities" />
+            <End Role="BusinessEntityContact" EntitySet="BusinessEntityContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_BusinessEntity_BusinessEntityID" Association="Self.FK_Person_BusinessEntity_BusinessEntityID">
+            <End Role="BusinessEntity" EntitySet="BusinessEntities" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityContact_ContactType_ContactTypeID" Association="Self.FK_BusinessEntityContact_ContactType_ContactTypeID">
+            <End Role="ContactType" EntitySet="ContactTypes" />
+            <End Role="BusinessEntityContact" EntitySet="BusinessEntityContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessEntityContact_Person_PersonID" Association="Self.FK_BusinessEntityContact_Person_PersonID">
+            <End Role="Person" EntitySet="People" />
+            <End Role="BusinessEntityContact" EntitySet="BusinessEntityContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StateProvince_CountryRegion_CountryRegionCode" Association="Self.FK_StateProvince_CountryRegion_CountryRegionCode">
+            <End Role="CountryRegion" EntitySet="CountryRegions" />
+            <End Role="StateProvince" EntitySet="StateProvinces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmailAddress_Person_BusinessEntityID" Association="Self.FK_EmailAddress_Person_BusinessEntityID">
+            <End Role="Person" EntitySet="People" />
+            <End Role="EmailAddress" EntitySet="EmailAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Password_Person_BusinessEntityID" Association="Self.FK_Password_Person_BusinessEntityID">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Password" EntitySet="Passwords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonPhone_Person_BusinessEntityID" Association="Self.FK_PersonPhone_Person_BusinessEntityID">
+            <End Role="Person" EntitySet="People" />
+            <End Role="PersonPhone" EntitySet="PersonPhones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID" Association="Self.FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID">
+            <End Role="PhoneNumberType" EntitySet="PhoneNumberTypes" />
+            <End Role="PersonPhone" EntitySet="PersonPhones" />
+          </AssociationSet>
+          <FunctionImport Name="uspUpdateEmployeeHireInfo">
+            <Parameter Name="BusinessEntityID" Mode="In" Type="Int32" />
+            <Parameter Name="JobTitle" Mode="In" Type="String" />
+            <Parameter Name="HireDate" Mode="In" Type="DateTime" />
+            <Parameter Name="RateChangeDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Rate" Mode="In" Type="Decimal" />
+            <Parameter Name="PayFrequency" Mode="In" Type="Byte" />
+            <Parameter Name="CurrentFlag" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="uspUpdateEmployeeLogin">
+            <Parameter Name="BusinessEntityID" Mode="In" Type="Int32" />
+            <Parameter Name="LoginID" Mode="In" Type="String" />
+            <Parameter Name="JobTitle" Mode="In" Type="String" />
+            <Parameter Name="HireDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CurrentFlag" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="uspUpdateEmployeePersonalInfo">
+            <Parameter Name="BusinessEntityID" Mode="In" Type="Int32" />
+            <Parameter Name="NationalIDNumber" Mode="In" Type="String" />
+            <Parameter Name="BirthDate" Mode="In" Type="DateTime" />
+            <Parameter Name="MaritalStatus" Mode="In" Type="String" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AdventureWorksModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="AdventureWorksModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="AdventureWorksModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="NationalIDNumber" ColumnName="NationalIDNumber" />
+                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
+                <ScalarProperty Name="OrganizationLevel" ColumnName="OrganizationLevel" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+                <ScalarProperty Name="SalariedFlag" ColumnName="SalariedFlag" />
+                <ScalarProperty Name="VacationHours" ColumnName="VacationHours" />
+                <ScalarProperty Name="SickLeaveHours" ColumnName="SickLeaveHours" />
+                <ScalarProperty Name="CurrentFlag" ColumnName="CurrentFlag" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDepartmentHistories">
+            <EntityTypeMapping TypeName="AdventureWorksModel.EmployeeDepartmentHistory">
+              <MappingFragment StoreEntitySet="EmployeeDepartmentHistory">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeePayHistories">
+            <EntityTypeMapping TypeName="AdventureWorksModel.EmployeePayHistory">
+              <MappingFragment StoreEntitySet="EmployeePayHistory">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="RateChangeDate" ColumnName="RateChangeDate" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="PayFrequency" ColumnName="PayFrequency" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobCandidates">
+            <EntityTypeMapping TypeName="AdventureWorksModel.JobCandidate">
+              <MappingFragment StoreEntitySet="JobCandidate">
+                <ScalarProperty Name="JobCandidateID" ColumnName="JobCandidateID" />
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="Resume" ColumnName="Resume" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shifts">
+            <EntityTypeMapping TypeName="AdventureWorksModel.Shift">
+              <MappingFragment StoreEntitySet="Shift">
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="AdventureWorksModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="StateProvinceID" ColumnName="StateProvinceID" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="SpatialLocation" ColumnName="SpatialLocation" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AddressTypes">
+            <EntityTypeMapping TypeName="AdventureWorksModel.AddressType">
+              <MappingFragment StoreEntitySet="AddressType">
+                <ScalarProperty Name="AddressTypeID" ColumnName="AddressTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BusinessEntities">
+            <EntityTypeMapping TypeName="AdventureWorksModel.BusinessEntity">
+              <MappingFragment StoreEntitySet="BusinessEntity">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BusinessEntityAddresses">
+            <EntityTypeMapping TypeName="AdventureWorksModel.BusinessEntityAddress">
+              <MappingFragment StoreEntitySet="BusinessEntityAddress">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="AddressTypeID" ColumnName="AddressTypeID" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BusinessEntityContacts">
+            <EntityTypeMapping TypeName="AdventureWorksModel.BusinessEntityContact">
+              <MappingFragment StoreEntitySet="BusinessEntityContact">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="ContactTypeID" ColumnName="ContactTypeID" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContactTypes">
+            <EntityTypeMapping TypeName="AdventureWorksModel.ContactType">
+              <MappingFragment StoreEntitySet="ContactType">
+                <ScalarProperty Name="ContactTypeID" ColumnName="ContactTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CountryRegions">
+            <EntityTypeMapping TypeName="AdventureWorksModel.CountryRegion">
+              <MappingFragment StoreEntitySet="CountryRegion">
+                <ScalarProperty Name="CountryRegionCode" ColumnName="CountryRegionCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailAddresses">
+            <EntityTypeMapping TypeName="AdventureWorksModel.EmailAddress">
+              <MappingFragment StoreEntitySet="EmailAddress">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="EmailAddressID" ColumnName="EmailAddressID" />
+                <ScalarProperty Name="EmailAddress1" ColumnName="EmailAddress" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Passwords">
+            <EntityTypeMapping TypeName="AdventureWorksModel.Password">
+              <MappingFragment StoreEntitySet="Password">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="AdventureWorksModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="PersonType" ColumnName="PersonType" />
+                <ScalarProperty Name="NameStyle" ColumnName="NameStyle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Suffix" ColumnName="Suffix" />
+                <ScalarProperty Name="EmailPromotion" ColumnName="EmailPromotion" />
+                <ScalarProperty Name="AdditionalContactInfo" ColumnName="AdditionalContactInfo" />
+                <ScalarProperty Name="Demographics" ColumnName="Demographics" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonPhones">
+            <EntityTypeMapping TypeName="AdventureWorksModel.PersonPhone">
+              <MappingFragment StoreEntitySet="PersonPhone">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberTypeID" ColumnName="PhoneNumberTypeID" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhoneNumberTypes">
+            <EntityTypeMapping TypeName="AdventureWorksModel.PhoneNumberType">
+              <MappingFragment StoreEntitySet="PhoneNumberType">
+                <ScalarProperty Name="PhoneNumberTypeID" ColumnName="PhoneNumberTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StateProvinces">
+            <EntityTypeMapping TypeName="AdventureWorksModel.StateProvince">
+              <MappingFragment StoreEntitySet="StateProvince">
+                <ScalarProperty Name="StateProvinceID" ColumnName="StateProvinceID" />
+                <ScalarProperty Name="StateProvinceCode" ColumnName="StateProvinceCode" />
+                <ScalarProperty Name="CountryRegionCode" ColumnName="CountryRegionCode" />
+                <ScalarProperty Name="IsOnlyStateProvinceFlag" ColumnName="IsOnlyStateProvinceFlag" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TerritoryID" ColumnName="TerritoryID" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vEmployees">
+            <EntityTypeMapping TypeName="AdventureWorksModel.vEmployee">
+              <MappingFragment StoreEntitySet="vEmployee">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Suffix" ColumnName="Suffix" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberType" ColumnName="PhoneNumberType" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="EmailPromotion" ColumnName="EmailPromotion" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="StateProvinceName" ColumnName="StateProvinceName" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="CountryRegionName" ColumnName="CountryRegionName" />
+                <ScalarProperty Name="AdditionalContactInfo" ColumnName="AdditionalContactInfo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vEmployeeDepartments">
+            <EntityTypeMapping TypeName="AdventureWorksModel.vEmployeeDepartment">
+              <MappingFragment StoreEntitySet="vEmployeeDepartment">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Suffix" ColumnName="Suffix" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vEmployeeDepartmentHistories">
+            <EntityTypeMapping TypeName="AdventureWorksModel.vEmployeeDepartmentHistory">
+              <MappingFragment StoreEntitySet="vEmployeeDepartmentHistory">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Suffix" ColumnName="Suffix" />
+                <ScalarProperty Name="Shift" ColumnName="Shift" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vJobCandidates">
+            <EntityTypeMapping TypeName="AdventureWorksModel.vJobCandidate">
+              <MappingFragment StoreEntitySet="vJobCandidate">
+                <ScalarProperty Name="JobCandidateID" ColumnName="JobCandidateID" />
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="Name_Prefix" ColumnName="Name.Prefix" />
+                <ScalarProperty Name="Name_First" ColumnName="Name.First" />
+                <ScalarProperty Name="Name_Middle" ColumnName="Name.Middle" />
+                <ScalarProperty Name="Name_Last" ColumnName="Name.Last" />
+                <ScalarProperty Name="Name_Suffix" ColumnName="Name.Suffix" />
+                <ScalarProperty Name="Skills" ColumnName="Skills" />
+                <ScalarProperty Name="Addr_Type" ColumnName="Addr.Type" />
+                <ScalarProperty Name="Addr_Loc_CountryRegion" ColumnName="Addr.Loc.CountryRegion" />
+                <ScalarProperty Name="Addr_Loc_State" ColumnName="Addr.Loc.State" />
+                <ScalarProperty Name="Addr_Loc_City" ColumnName="Addr.Loc.City" />
+                <ScalarProperty Name="Addr_PostalCode" ColumnName="Addr.PostalCode" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="WebSite" ColumnName="WebSite" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vJobCandidateEducations">
+            <EntityTypeMapping TypeName="AdventureWorksModel.vJobCandidateEducation">
+              <MappingFragment StoreEntitySet="vJobCandidateEducation">
+                <ScalarProperty Name="JobCandidateID" ColumnName="JobCandidateID" />
+                <ScalarProperty Name="Edu_Level" ColumnName="Edu.Level" />
+                <ScalarProperty Name="Edu_StartDate" ColumnName="Edu.StartDate" />
+                <ScalarProperty Name="Edu_EndDate" ColumnName="Edu.EndDate" />
+                <ScalarProperty Name="Edu_Degree" ColumnName="Edu.Degree" />
+                <ScalarProperty Name="Edu_Major" ColumnName="Edu.Major" />
+                <ScalarProperty Name="Edu_Minor" ColumnName="Edu.Minor" />
+                <ScalarProperty Name="Edu_GPA" ColumnName="Edu.GPA" />
+                <ScalarProperty Name="Edu_GPAScale" ColumnName="Edu.GPAScale" />
+                <ScalarProperty Name="Edu_School" ColumnName="Edu.School" />
+                <ScalarProperty Name="Edu_Loc_CountryRegion" ColumnName="Edu.Loc.CountryRegion" />
+                <ScalarProperty Name="Edu_Loc_State" ColumnName="Edu.Loc.State" />
+                <ScalarProperty Name="Edu_Loc_City" ColumnName="Edu.Loc.City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vJobCandidateEmployments">
+            <EntityTypeMapping TypeName="AdventureWorksModel.vJobCandidateEmployment">
+              <MappingFragment StoreEntitySet="vJobCandidateEmployment">
+                <ScalarProperty Name="JobCandidateID" ColumnName="JobCandidateID" />
+                <ScalarProperty Name="Emp_StartDate" ColumnName="Emp.StartDate" />
+                <ScalarProperty Name="Emp_EndDate" ColumnName="Emp.EndDate" />
+                <ScalarProperty Name="Emp_OrgName" ColumnName="Emp.OrgName" />
+                <ScalarProperty Name="Emp_JobTitle" ColumnName="Emp.JobTitle" />
+                <ScalarProperty Name="Emp_Responsibility" ColumnName="Emp.Responsibility" />
+                <ScalarProperty Name="Emp_FunctionCategory" ColumnName="Emp.FunctionCategory" />
+                <ScalarProperty Name="Emp_IndustryCategory" ColumnName="Emp.IndustryCategory" />
+                <ScalarProperty Name="Emp_Loc_CountryRegion" ColumnName="Emp.Loc.CountryRegion" />
+                <ScalarProperty Name="Emp_Loc_State" ColumnName="Emp.Loc.State" />
+                <ScalarProperty Name="Emp_Loc_City" ColumnName="Emp.Loc.City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vAdditionalContactInfoes">
+            <EntityTypeMapping TypeName="AdventureWorksModel.vAdditionalContactInfo">
+              <MappingFragment StoreEntitySet="vAdditionalContactInfo">
+                <ScalarProperty Name="BusinessEntityID" ColumnName="BusinessEntityID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
+                <ScalarProperty Name="TelephoneSpecialInstructions" ColumnName="TelephoneSpecialInstructions" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="StateProvince" ColumnName="StateProvince" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="CountryRegion" ColumnName="CountryRegion" />
+                <ScalarProperty Name="HomeAddressSpecialInstructions" ColumnName="HomeAddressSpecialInstructions" />
+                <ScalarProperty Name="EMailAddress" ColumnName="EMailAddress" />
+                <ScalarProperty Name="EMailSpecialInstructions" ColumnName="EMailSpecialInstructions" />
+                <ScalarProperty Name="EMailTelephoneNumber" ColumnName="EMailTelephoneNumber" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vStateProvinceCountryRegions">
+            <EntityTypeMapping TypeName="AdventureWorksModel.vStateProvinceCountryRegion">
+              <MappingFragment StoreEntitySet="vStateProvinceCountryRegion">
+                <ScalarProperty Name="StateProvinceID" ColumnName="StateProvinceID" />
+                <ScalarProperty Name="StateProvinceCode" ColumnName="StateProvinceCode" />
+                <ScalarProperty Name="IsOnlyStateProvinceFlag" ColumnName="IsOnlyStateProvinceFlag" />
+                <ScalarProperty Name="StateProvinceName" ColumnName="StateProvinceName" />
+                <ScalarProperty Name="TerritoryID" ColumnName="TerritoryID" />
+                <ScalarProperty Name="CountryRegionCode" ColumnName="CountryRegionCode" />
+                <ScalarProperty Name="CountryRegionName" ColumnName="CountryRegionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspUpdateEmployeeHireInfo" FunctionName="AdventureWorksModel.Store.uspUpdateEmployeeHireInfo" />
+          <FunctionImportMapping FunctionImportName="uspUpdateEmployeeLogin" FunctionName="AdventureWorksModel.Store.uspUpdateEmployeeLogin" />
+          <FunctionImportMapping FunctionImportName="uspUpdateEmployeePersonalInfo" FunctionName="AdventureWorksModel.Store.uspUpdateEmployeePersonalInfo" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

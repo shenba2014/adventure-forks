@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7ee9cf86623d4c0e913bc7287a8986b9" Name="Diagram1">
+        <EntityTypeShape EntityType="AdventureWorksModel.Department" Width="1.5" PointX="8.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.Employee" Width="1.5" PointX="5.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.EmployeeDepartmentHistory" Width="1.5" PointX="10.5" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.EmployeePayHistory" Width="1.5" PointX="7.5" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.JobCandidate" Width="1.5" PointX="7.5" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.Shift" Width="1.5" PointX="8.25" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.Address" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.AddressType" Width="1.5" PointX="0.75" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.BusinessEntity" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.BusinessEntityAddress" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.BusinessEntityContact" Width="1.5" PointX="8.25" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.ContactType" Width="1.5" PointX="6" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.CountryRegion" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.EmailAddress" Width="1.5" PointX="5.25" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.Password" Width="1.5" PointX="5.25" PointY="23.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.Person" Width="1.5" PointX="3" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.PersonPhone" Width="1.5" PointX="10.25" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.PhoneNumberType" Width="1.5" PointX="8" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.StateProvince" Width="1.5" PointX="1.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.vEmployee" Width="1.5" PointX="3.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.vEmployeeDepartment" Width="1.5" PointX="5.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.vEmployeeDepartmentHistory" Width="1.5" PointX="5.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.vJobCandidate" Width="1.5" PointX="7.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.vJobCandidateEducation" Width="1.5" PointX="7.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.vJobCandidateEmployment" Width="1.5" PointX="9.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.vAdditionalContactInfo" Width="1.5" PointX="9.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdventureWorksModel.vStateProvinceCountryRegion" Width="1.5" PointX="2.75" PointY="8.875" IsExpanded="true" />
+        <AssociationConnector Association="AdventureWorksModel.FK_EmployeeDepartmentHistory_Department_DepartmentID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_Employee_Person_BusinessEntityID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_EmployeeDepartmentHistory_Employee_BusinessEntityID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_EmployeePayHistory_Employee_BusinessEntityID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_JobCandidate_Employee_BusinessEntityID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_EmployeeDepartmentHistory_Shift_ShiftID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_Address_StateProvince_StateProvinceID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_BusinessEntityAddress_Address_AddressID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_BusinessEntityAddress_AddressType_AddressTypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_BusinessEntityContact_BusinessEntity_BusinessEntityID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_Person_BusinessEntity_BusinessEntityID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_BusinessEntityContact_ContactType_ContactTypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_BusinessEntityContact_Person_PersonID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_StateProvince_CountryRegion_CountryRegionCode" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_EmailAddress_Person_BusinessEntityID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_Password_Person_BusinessEntityID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_PersonPhone_Person_BusinessEntityID" ManuallyRouted="false" />
+        <AssociationConnector Association="AdventureWorksModel.FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
