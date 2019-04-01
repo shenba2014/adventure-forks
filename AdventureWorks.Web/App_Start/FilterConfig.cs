@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using AdventureWorks.Web.Filters;
 
 namespace AdventureWorks.Web
 {
@@ -7,6 +8,7 @@ namespace AdventureWorks.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+			filters.Add(new ExceptionFilter());
             filters.Add(new HandleErrorAttribute());
         }
     }
