@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using log4net;
+using log4net.Appender;
+using WebGrease.Css.Extensions;
 
 namespace AdventureWorks.Web.Filters
 {
@@ -11,9 +13,11 @@ namespace AdventureWorks.Web.Filters
 	{
 		private static readonly ILog Log = LogManager.GetLogger(typeof(ExceptionFilter));
 
-		public void OnException(ExceptionContext filterContext)
-		{
-			Log.Error("Application Exception", filterContext.Exception);
-		}
+	    public void OnException(ExceptionContext filterContext)
+	    {
+	        Log.Error("Application Exception", filterContext.Exception);
+	        Log.Logger.Repository.GetAppenders().OfType<BufferingAppenderSkeleton>()
+	            .ForEach(x => x.Flush());
+	    }
 	}
 }
