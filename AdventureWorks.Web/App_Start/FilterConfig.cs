@@ -10,6 +10,7 @@ namespace AdventureWorks.Web
         {
             filters.Add(new ExceptionFilter());
             filters.Add(new ErrorHandler.AiHandleErrorAttribute());
+            filters.Add(new ActionLogFilter());
         }
     }
 }
