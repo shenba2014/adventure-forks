@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using System.Threading.Tasks;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(AdventureWorks.Web.Startup))]
@@ -8,6 +9,7 @@ namespace AdventureWorks.Web
     {
         public void Configuration(IAppBuilder app)
         {
+            LogStartTimeAsync().GetAwaiter();
             ConfigureAuth(app);
         }
     }
