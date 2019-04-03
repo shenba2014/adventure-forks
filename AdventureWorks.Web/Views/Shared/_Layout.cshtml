@@ -38,7 +38,6 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
     <!-- 
     To collect user behavior analytics about your application, 
     insert the following script into each page you want to track.
@@ -55,5 +54,6 @@
   
         window.appInsights=appInsights,appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();
     </script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
