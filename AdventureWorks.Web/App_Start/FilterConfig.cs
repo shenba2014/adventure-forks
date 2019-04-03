@@ -8,8 +8,8 @@ namespace AdventureWorks.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-			filters.Add(new ExceptionFilter());
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new ExceptionFilter());
+            filters.Add(new ErrorHandler.AiHandleErrorAttribute());
         }
     }
 }
