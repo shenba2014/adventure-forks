@@ -1,29 +1,33 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using AdventureWorks.Services.HumanResources;
 
 namespace AdventureWorks.Web.Controllers
 {
-    public class DepartmentsController : Controller
-    {
-        // GET: Departments
-        public ActionResult Index()
-        {
-            DepartmentService departmentService = new DepartmentService();
-            var departmentGroups = departmentService.GetDepartments();
+	public class DepartmentsController : ApiController
+	{
+		[HttpGet]
+		public IHttpActionResult Index()
+		{
+			DepartmentService departmentService = new DepartmentService();
+			var departmentGroups = departmentService.GetDepartments();
 
-            return View(departmentGroups);
-        }
+			return Json(departmentGroups);
+		}
 
-        // GET: Departments/Employees/{id}
-        public ActionResult Employees(int id)
-        {
-            DepartmentService departmentService = new DepartmentService();
-            var departmentEmployees = departmentService.GetDepartmentEmployees(id);
-            var departmentInfo = departmentService.GetDepartmentInfo(id);
+		[HttpGet]
+		public IHttpActionResult Employees(int id)
+		{
+			DepartmentService departmentService = new DepartmentService();
+			var departmentEmployees = departmentService.GetDepartmentEmployees(id);
+			var departmentInfo = departmentService.GetDepartmentInfo(id);
+			var title = "Employees in " + departmentInfo.Name + " Department";
 
-            ViewBag.Title = "Employees in " + departmentInfo.Name + " Department";
-
-            return View(departmentEmployees);
-        }
-    }
+			return Json(new
+			{
+				Title = title,
+				Employees = departmentEmployees
+			});
+		}
+	}
 }
