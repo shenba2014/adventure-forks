@@ -38,6 +38,7 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Departments", "Index", "Departments")</li>
+                    <li>@Html.ActionLink("Azure Cache for Redis Test", "RedisCache", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
