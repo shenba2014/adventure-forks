@@ -15,7 +15,7 @@ namespace AdventureWorks.Web.Models
 		public int Losses { get; set; }
 		public int Ties { get; set; }
 
-		static public void PlayGames(IEnumerable<Team> teams)
+		public static void PlayGames(IEnumerable<Team> teams)
 		{
 			// Simple random generation of statistics.
 			Random r = new Random();

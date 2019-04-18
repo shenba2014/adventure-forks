@@ -16,22 +16,16 @@ namespace AdventureWorks.Web.Controllers
 {
     public class TeamsController : Controller
     {
-        private TeamContext db = new TeamContext();
+        private readonly TeamContext _db = new TeamContext();
 
         // Redis Connection string info
-        private static Lazy<ConnectionMultiplexer> lazyConnection = new Lazy<ConnectionMultiplexer>(() =>
+        private static readonly Lazy<ConnectionMultiplexer> LazyConnection = new Lazy<ConnectionMultiplexer>(() =>
         {
             string cacheConnection = ConfigurationManager.AppSettings["CacheConnection"].ToString();
             return ConnectionMultiplexer.Connect(cacheConnection);
         });
 
-        public static ConnectionMultiplexer Connection
-        {
-            get
-            {
-                return lazyConnection.Value;
-            }
-        }
+        public static ConnectionMultiplexer Connection => LazyConnection.Value;
 
         // GET: Teams
         public ActionResult Index(string actionType, string resultType)
@@ -92,7 +86,7 @@ namespace AdventureWorks.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = db.Teams.Find(id);
+            Team team = GetTeamById(id.Value);
             if (team == null)
             {
                 return HttpNotFound();
@@ -115,8 +109,8 @@ namespace AdventureWorks.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Teams.Add(team);
-                db.SaveChanges();
+                _db.Teams.Add(team);
+                _db.SaveChanges();
                 // When a team is added, the cache is out of date.
                 // Clear the cached teams.
                 ClearCachedTeams();
@@ -133,7 +127,7 @@ namespace AdventureWorks.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = db.Teams.Find(id);
+            Team team = GetTeamById(id.Value);
             if (team == null)
             {
                 return HttpNotFound();
@@ -150,8 +144,8 @@ namespace AdventureWorks.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(team).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(team).State = EntityState.Modified;
+                _db.SaveChanges();
                 // When a team is edited, the cache is out of date.
                 // Clear the cached teams.
                 ClearCachedTeams();
@@ -167,7 +161,7 @@ namespace AdventureWorks.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = db.Teams.Find(id);
+            Team team = GetTeamById(id.Value);
             if (team == null)
             {
                 return HttpNotFound();
@@ -180,9 +174,9 @@ namespace AdventureWorks.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Team team = db.Teams.Find(id);
-            db.Teams.Remove(team);
-            db.SaveChanges();
+            Team team = GetTeamById(id);
+            _db.Teams.Remove(team);
+            _db.SaveChanges();
             // When a team is deleted, the cache is out of date.
             // Clear the cached teams.
             ClearCachedTeams();
@@ -193,7 +187,7 @@ namespace AdventureWorks.Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -202,12 +196,12 @@ namespace AdventureWorks.Web.Controllers
         {
             ViewBag.msg += "Updating team statistics. ";
             // Play a "season" of games.
-            var teams = from t in db.Teams
+            var teams = from t in _db.Teams
                 select t;
 
             Team.PlayGames(teams);
 
-            db.SaveChanges();
+            _db.SaveChanges();
 
             // Clear any cached results
             ClearCachedTeams();
@@ -217,8 +211,8 @@ namespace AdventureWorks.Web.Controllers
         {
             ViewBag.msg += "Rebuilding DB. ";
             // Delete and re-initialize the database with sample data.
-            db.Database.Delete();
-            db.Database.Initialize(true);
+            _db.Database.Delete();
+            _db.Database.Initialize(true);
 
             // Clear any cached results
             ClearCachedTeams();
@@ -235,7 +229,7 @@ namespace AdventureWorks.Web.Controllers
         List<Team> GetFromDB()
         {
             ViewBag.msg += "Results read from DB. ";
-            var results = from t in db.Teams
+            var results = from t in _db.Teams
                 orderby t.Wins descending
                 select t;
 
@@ -323,6 +317,44 @@ namespace AdventureWorks.Web.Controllers
                 teams.Add(JsonConvert.DeserializeObject<Team>(team.Element));
             }
             return teams;
+        }
+
+        Team GetTeamById(int id)
+        {
+            IDatabase cache = Connection.GetDatabase();
+            var key = $"team_{id}";
+            var cacheValue = cache.StringGet(key);
+            if (cacheValue.HasValue && !string.IsNullOrWhiteSpace(cacheValue.ToString()))
+            {
+                ViewBag.msg += "Reading team from cache. ";
+                return JsonConvert.DeserializeObject<Team>(cacheValue.ToString());
+            }
+            else
+            {
+                ViewBag.msg += "Team cache miss. ";
+
+                // Read from DB
+                var team = GetTeamFromDB(id);
+
+                if (team != null)
+                {
+                    ViewBag.msg += "Storing team to cache. ";
+
+                    cache.StringSet(key, JsonConvert.SerializeObject(team));
+                }
+                else
+                {
+                    ViewBag.msg += "Team not found in DB";
+                }
+
+                return team;
+            }
+        }
+
+        Team GetTeamFromDB(int id)
+        {
+            ViewBag.msg += "Results read from DB. ";
+            return _db.Teams.Find(id);
         }
     }
 }
