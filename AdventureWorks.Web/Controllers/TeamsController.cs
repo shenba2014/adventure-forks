@@ -114,6 +114,7 @@ namespace AdventureWorks.Web.Controllers
                 // When a team is added, the cache is out of date.
                 // Clear the cached teams.
                 ClearCachedTeams();
+                ClearTeamCacheById(team.ID);
                 return RedirectToAction("Index");
             }
 
@@ -149,6 +150,7 @@ namespace AdventureWorks.Web.Controllers
                 // When a team is edited, the cache is out of date.
                 // Clear the cached teams.
                 ClearCachedTeams();
+                ClearTeamCacheById(team.ID);
                 return RedirectToAction("Index");
             }
             return View(team);
@@ -180,6 +182,7 @@ namespace AdventureWorks.Web.Controllers
             // When a team is deleted, the cache is out of date.
             // Clear the cached teams.
             ClearCachedTeams();
+            ClearTeamCacheById(team.ID);
             return RedirectToAction("Index");
         }
 
@@ -322,7 +325,7 @@ namespace AdventureWorks.Web.Controllers
         Team GetTeamById(int id)
         {
             IDatabase cache = Connection.GetDatabase();
-            var key = $"team_{id}";
+            var key = GetTeamCacheKey(id);
             var cacheValue = cache.StringGet(key);
             if (cacheValue.HasValue && !string.IsNullOrWhiteSpace(cacheValue.ToString()))
             {
@@ -355,6 +358,18 @@ namespace AdventureWorks.Web.Controllers
         {
             ViewBag.msg += "Results read from DB. ";
             return _db.Teams.Find(id);
+        }
+
+        void ClearTeamCacheById(int id)
+        {
+            IDatabase cache = Connection.GetDatabase();
+            var key = GetTeamCacheKey(id);
+            cache.KeyDelete(key);
+        }
+
+        string GetTeamCacheKey(int id)
+        {
+            return $"team_{id}";
         }
     }
 }
